@@ -15,4 +15,6 @@ imshow(im);
 %actual test
 [centers, radii,metric] = imfindcircles(im,[15 100],'ObjectPolarity','dark', ...
     'Sensitivity',0.92,'EdgeThreshold',0.1);
+centers = centers(1:15,:);
+radii = radii(1:15,:);
 viscircles(centers, radii,'EdgeColor','b');
