@@ -14,6 +14,11 @@ function [fileOut,resizeFactor] = metro(type)
 
 % Sélectionner les images en fonction de la base de données, apprentissage ou test
 
+%close all;
+%clear all;
+%clc;
+se = strel('square',10);
+
 n = 1:261;
 ok =1;
 if strcmp(type,'Test')
@@ -34,10 +39,18 @@ if ok
     for n = numImages
         nom = ['IM (' num2str(n) ')'];
         im = im2double(imread(['./BD/'  nom '.JPG']));
-        figure(fid);
-        imshow(im);
+        figure(n);
+        %imshow(im);
         title 'Image source'
 %        -- RECONNAISSANCE DES SYMBOLES DANS L'IMAGE n
+        [sizex, sizey, sizez] = size(im);
+        im = rgb2gray(im);
+
+        im = imdilate(im,se);
+        imshow(im);
+        [centers, radii,metric] = imfindcircles(im,[15 70],'ObjectPolarity','dark', ...
+        'Sensitivity',0.92,'EdgeThreshold',0.1);
+        viscircles(centers, radii,'EdgeColor','b');
         
 %        -- STOCAGE DANS LA MATRICE BD de 6 colonnes
     end
