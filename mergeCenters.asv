@@ -20,14 +20,29 @@ for j = (1:l2)
     radii12(l1+j) = radii2(j);
 end
 
+%thresholds for merge
+threshC = 3;
+threshR = 3;
+
 %merge radii
 r(1) = radii(1);
+c(1,:) = centers12(1,:);
 for i = (1:l12)
-    for j = (1:)
-    if (radii12(i))
+    same = false;
+    for j = (1:length(r))
+        if (centers12(i,1)<c()threshC)
+        if (radii12(i)<r(j)+threshR & radii12(i)>r(j)-threshR)
+            same = true
+            break;
+        end
+        
+    end
+    if (same)
+        r(length(r)+1) = radii12() 
+    end
+    
 end
-%threshC = 3;
-%threshR = 3;
+
 %centers12
 c = centers12
 r = radii12

@@ -46,7 +46,7 @@ imshow(im);
 %exam = im(1:250,1:250)
 [centers, radii,metric] = imfindcircles(im,[15 100],'ObjectPolarity','dark', ...
     'Sensitivity',0.92,'EdgeThreshold',0.1);
-viscircles(centers(1:10,:), radii(1:10),'EdgeColor','r');
+viscircles(centers(1,:), radii(1),'EdgeColor','r');
 
 % figure(2);
 % imshow(jm);

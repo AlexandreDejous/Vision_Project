@@ -39,12 +39,20 @@ if ok
         title 'Image source'
 %        -- RECONNAISSANCE DES SYMBOLES DANS L'IMAGE n
         imProcessed = newAlgo(im,100);
-        imshow(im);
-        [centers,radii] = searchCircles(imProcessed);
+        imshow(imProcessed);
+        [centers1,radii1] = searchCircles(imProcessed);
         %2nd round
         [centers2,radii2] = searchCircles(im);
-        
+        %merge cenetrs and radii
+        [centers, radii] = mergeCenters(centers1,radii1,centers2,radii2);
+        coords = centersToCoords(centers,radii);
+        %viscircles(centers, radii,'EdgeColor','r');
+        subIm = subImage(im,coords,1);
+        imshow(subIm);
         pause(1);
+
+        
+        
 %        -- STOCAGE DANS LA MATRICE BD de 6 colonnes
     end
     

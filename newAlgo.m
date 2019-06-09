@@ -38,7 +38,12 @@ for x = (1:sizex)
                 im(x,y,1)= 255;
                 im(x,y,2)= 255;
                 im(x,y,3)= 255;
+            
             end
+%         else
+%                 im(x,y,1)= 0;
+%                 im(x,y,2)= 0;
+%                 im(x,y,3)= 0;
         end
     end
 end

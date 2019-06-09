@@ -1,0 +1,3 @@
+function subIm = subImage(im, coords, n)%pick n-th sub image from im with coords(n)
+    
+end
