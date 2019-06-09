@@ -2,23 +2,29 @@ clear all;
 close all;
 clc;
 
-im = imread(".\BD\IM (36).JPG");
+im = imread(".\BD\IM (2).JPG");
 [sizex, sizey, sizez] = size(im);
-fi
-for x = (1:sizex)
-    for y = (1:sizey)
-        if(im(x,y,1)>130 & im(x,y,2)>130 & im(x,y,3)>130)
-            im(x,y,1)= 255;
-            im(x,y,2)= 255;
-            im(x,y,3)= 255;
-        end
-    end
-end
+figure(1);
+imshow(im);
+% imHsv = rgb2hsv(im);
+% figure(3);
+% imshow(imHsv);
+
+% for x = (1:sizex)
+%     for y = (1:sizey)
+%         if(im(x,y,1)>130 & im(x,y,2)>130 & im(x,y,3)>130)
+%             im(x,y,1)= 255;
+%             im(x,y,2)= 255;
+%             im(x,y,3)= 255;
+%         end
+%     end
+% end
 %im = imread("DetectFiveStrongestCirclesInImageExample_01.png");
 im = rgb2gray(im); %gris
 im = glp(im,100);
 im = abs(im);
 im = uint8(im);
+figure(2);
 imshow(im);
 
 %jm = imcomplement(im); %complement

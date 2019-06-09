@@ -1,7 +1,7 @@
 clear all;
 close all;
 clc;
-im = imread(".\BD\IM (36).JPG");
+im = imread(".\BD\IM (6).JPG");
 [sizex, sizey, sizez] = size(im);
 im = rgb2gray(im);
 

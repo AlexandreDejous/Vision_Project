@@ -43,10 +43,10 @@ if ok
         nom = ['IM (' num2str(n) ')'];
         im = im2double(imread(['./BD/'  nom '.JPG']));
         figure(n);
-        %imshow(im);
+        imshow(im);
         title 'Image source'
 %        -- RECONNAISSANCE DES SYMBOLES DANS L'IMAGE n
-        gaussianFilter(im);
+        im = rgb2gray(im); %gris
         pause(1);
         
 %        -- STOCAGE DANS LA MATRICE BD de 6 colonnes
