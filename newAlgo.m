@@ -33,7 +33,7 @@ line7Tresh = 0.06;
 
 for x = (1:sizex)
     for y = (1:sizey)
-        if(imHsv(x,y,2)<=0.30 & imHsv(x,y,3)>0.60)
+        if(imHsv(x,y,2)<=0.30 & imHsv(x,y,3)>0.55)
             if (imHsv(x,y,1)> line7Hue + line7Tresh | imHsv(x,y,1)< line7Hue - line7Tresh)
                 im(x,y,1)= 255;
                 im(x,y,2)= 255;
@@ -48,10 +48,10 @@ im = rgb2gray(im); %gris
 im = glp(im,tresh);
 im = abs(im);
 im = uint8(im);
-figure(1)
-imshow(im);
-figure(2)
-imshow(imHsv);
+% figure(1)
+% imshow(im);
+% figure(2)
+% imshow(imHsv);
 response = im;
 
 %jm = imcomplement(im); %complement
