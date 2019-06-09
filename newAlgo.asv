@@ -29,16 +29,17 @@ imHsv = rgb2hsv(im);
 % end
 %im = imread("DetectFiveStrongestCirclesInImageExample_01.png");
 line7Hue = 0.96;
-line7Tresh = 0.06;
+line7Tresh = 0.04;
 
 for x = (1:sizex)
     for y = (1:sizey)
         if(imHsv(x,y,2)<=0.30 & imHsv(x,y,3)>0.60)
-            if (imHsv(x,y,1)> line7Hue + line7Tresh | imHsv(x,y,1)< line7Hue - line7Tresh)
-                im(x,y,1)= 255;
-                im(x,y,2)= 255;
-                im(x,y,3)= 255;
-            end
+            if (imHsv(x,y,1)> line7Hue + line7Tresh & imHsv(x,y,1)> line7Hue + line7Tresh
+% figure(1)
+% imshow(im);)
+            im(x,y,1)= 255;
+            im(x,y,2)= 255;
+            im(x,y,3)= 255;
         end
     end
 end

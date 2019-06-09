@@ -1,10 +1,13 @@
 clear all;
 close all;
 clc;
-[im,map] = imread(".\BD\IM (36).JPG");
+[im,map] = imread(".\BD\IM (14).JPG");
 [sizex, sizey, sizez] = size(im);
 figure(1);
 imshow(im);
 im = rgb2hsv(im);
+%im = rgb2gray(im);
 figure(2);
 imshow(im);
+%figure(3);
+%imhist(im);
