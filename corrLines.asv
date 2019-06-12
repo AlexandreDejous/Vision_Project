@@ -1,0 +1,17 @@
+function corrArray = corrLines(im)
+%takes sub image in input and returns correlation with paris metro lines
+    lineIm = imread('.\PICTO\01.png');
+    [lineX, lineY, ~] = size(lineIm);%we assume dimensions of all picto images are same
+    im = imresize(im,[lineX lineY]);%resize input im according to metro picto dim
+    corrArray = zeros(14,3);
+    for line = (1:14)
+        if(line < 10)
+            n = num2str(line);
+            lineIm = imread(['.\PICTO\0',n,'.png']);
+        else
+            n = num2str(line);
+            lineIm = imread(['.\PICTO\',n,'.png']);
+        end
+        corrArray(line,1) = corr2(im,lineIm);
+    end
+end

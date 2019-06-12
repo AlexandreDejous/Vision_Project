@@ -33,8 +33,6 @@ for i = (1:l12)
         if (centers12(i,1)<=c(j,1)+threshC & centers12(i,1)>=c(j,1)-threshC)
         if (centers12(i,2)<=c(j,2)+threshC & centers12(i,2)>=c(j,2)-threshC)
         if (radii12(i)<=r(j)+threshR & radii12(i)>=r(j)-threshR)
-            centers12(i,:)
-            c(j,:)
             same = true;
             break;
         end

@@ -38,12 +38,28 @@ if ok
         imshow(im);
         title 'Image source'
 %        -- RECONNAISSANCE DES SYMBOLES DANS L'IMAGE n
-        imProcessed = newAlgo(imProcessed,100);
+        imProcessed = newAlgo(im,100);
         imshow(imProcessed);
-        [centers,radii] = searchCircles(imProcessed);
-        viscircles(centers, radii,'EdgeColor','r');
+        [centers1,radii1] = searchCircles(imProcessed);
+        %2nd round
+        [centers2,radii2] = searchCircles(im);
+        %merge cenetrs and radii
+        [centers, radii] = mergeCenters(centers1,radii1,centers2,radii2);
+        coords = centersToCoords(centers,radii);
+        %viscircles(centers, radii,'EdgeColor','r');
+        for i = (1:length(radii))
+            subIm = subImage(im,coords,i);
+            %subImAdjusted = adjust_luminosity(subIm);
+            illuminant = illumgray(subIm);
+            subImIllu = chromadapt(subIm,illuminant,'ColorSpace','linear-rgb');
+            figure, montage(sub)
+            %imshow(subIm);
+            pause(1);
+        end
         
-        pause(1);
+
+        
+        
 %        -- STOCAGE DANS LA MATRICE BD de 6 colonnes
     end
     

@@ -47,9 +47,17 @@ if ok
         [centers, radii] = mergeCenters(centers1,radii1,centers2,radii2);
         coords = centersToCoords(centers,radii);
         %viscircles(centers, radii,'EdgeColor','r');
-        subIm = subImage(im,coords,1);
-        imshow(subIm);
-        pause(1);
+        
+        for i = (1:length(radii))
+            subIm = subImage(im,coords,i);
+            %subImAdjusted = adjust_luminosity(subIm);
+            illuminant = illumgray(im);
+            subImIllu = chromadapt(subIm,illuminant,'ColorSpace','linear-rgb');
+            figure, montage({subIm,subImIllu});
+            correlation = corrLines(subImIllu);
+            pause(3);
+        end
+        
 
         
         
