@@ -23,16 +23,22 @@ end
 
 
 %import image and init hsvimage + resulting image
-[im,map] = imread(".\BD\IM (36).JPG");
+[im,map] = imread(".\BD\IM (1).JPG");
+%im = im((518:562),(1263:1307),:); %FALSE POSITIVE
+%im = im((459:613),(813:968),:); %TRUE POSITIVE
+im = imfuse(im((518:562),(1263:1307),:), im((459:613),(813:968),:), 'montage');
+illuminant = illumgray(im);
+im = chromadapt(im,illuminant,'ColorSpace','linear-rgb');
+%%
 imHsv = rgb2hsv(im);
 [sizex, sizey, sizez] = size(imHsv);
 imResult = zeros(sizex, sizey, sizez);
 imResultLine = zeros(sizex, sizey);
 
 %tresholds for detection
-treshHlow = 0.08 ;  %/360; 0.08
-treshHhigh = 0.08 ;  %/360; 0.08
-treshSlow =  0.10;%/100; 0.2
+treshHlow = 0.05 ;  %/360; 0.08
+treshHhigh = 0.05 ;  %/360; 0.08
+treshSlow =  0.6;%/100; 0.2
 treshShigh =  0.20;%/100; 0.2
 treshVlow =  0.55;%/100; 0.8
 treshVhigh =  0.0;%/100; 0.8
@@ -41,7 +47,7 @@ treshVhigh =  0.0;%/100; 0.8
 for x = 1:sizex
     for y = 1:sizey
         for line = 1:14
-            if imHsv(x,y,1) > lineColor(line,1)-treshHlow & imHsv(x,y,1) < lineColor(line,1)+treshHhigh
+            if mod((imHsv(x,y,1)-(lineColor(line,1)-treshHlow)),1.0) <=  mod(((lineColor(line,1)+treshHlow)-(lineColor(line,1)-treshHlow)),1.0)
                 if imHsv(x,y,2) > lineColor(line,2)-treshSlow & imHsv(x,y,2) < lineColor(line,2)+treshShigh
                     if imHsv(x,y,3) > lineColor(line,3)-treshVlow & imHsv(x,y,3) < lineColor(line,3)+treshVhigh
                         imResult(x,y,:) = imHsv(x,y,:);

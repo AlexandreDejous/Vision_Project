@@ -1,7 +1,7 @@
 clear all;
 close all;
 clc;
-[im,map] = imread(".\BD\IM (14).JPG");
+[im,map] = imread(".\PICTO\01.png");
 [sizex, sizey, sizez] = size(im);
 figure(1);
 imshow(im);

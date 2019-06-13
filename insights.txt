@@ -1,1 +1,8 @@
 h = fspecial('log',10,7)*10000;
+
+treshHlow = 0.08 ;  %/360; 0.08
+treshHhigh = 0.08 ;  %/360; 0.08
+treshSlow =  0.10;%/100; 0.2
+treshShigh =  0.20;%/100; 0.2
+treshVlow =  0.55;%/100; 0.8
+treshVhigh =  0.0;%/100; 0.8

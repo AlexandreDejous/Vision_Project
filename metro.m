@@ -34,10 +34,11 @@ if ok
     for n = numImages
         nom = ['IM (' num2str(n) ')'];
         im = (imread(['./BD/'  nom '.JPG']));
-        figure(fid);
+%        figure(fid);
         imshow(im);
         title 'Image source'
 %        -- RECONNAISSANCE DES SYMBOLES DANS L'IMAGE n
+        close all;
         imProcessed = newAlgo(im,100);
         imshow(imProcessed);
         [centers1,radii1] = searchCircles(imProcessed);
@@ -48,12 +49,18 @@ if ok
         coords = centersToCoords(centers,radii);
         %viscircles(centers, radii,'EdgeColor','r');
         
+        %line COLOR array in hsv
+        lineColorHsv = lineColorArray;
+        
         for i = (1:length(radii))
             subIm = subImage(im,coords,i);
             %subImAdjusted = adjust_luminosity(subIm);
             illuminant = illumgray(im);
             subImIllu = chromadapt(subIm,illuminant,'ColorSpace','linear-rgb');
-            figure, montage({subIm,subImIllu});
+            imshow(subImIllu);
+            C = exctractNumbers(subImIllu);
+            %subImIllu = colorFilter(subImIllu,lineColorHsv);
+            %montage({subIm,subImIllu});
             correlation = corrLines(subImIllu);
             pause(3);
         end
