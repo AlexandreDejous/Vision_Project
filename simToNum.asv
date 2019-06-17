@@ -1,4 +1,0 @@
-function prob = simToNum(similarity)
-    [sizeX,sizeY] = size(similarity);
-    
-end

@@ -28,41 +28,98 @@ end
 fid = figure('Name', 'SOURCE IMAGE');
 if ok
     % Definir le facteur de redimensionnement
-    resizeFactor =  0.25
+    resizeFactor =  0.25;
+    BD = zeros(1,6);
+    iterationBD = 1;
+    % FOR TESTS
+    iteration = 0;%don't change
+    iterationmax = 1;%change
+    % END FOR TESTS
     
     % Programme de reconnaissance des images
     for n = numImages
+        %condition to make the loop iterate a certain number of times
+        %(serves BD indexing)
+        if (iteration >= iterationmax)
+            break
+        end
+        iteration = iteration+1;
+        
+        %numImage modificator to start over at a defined image
+        %comment if useless, put modificator = image you want to start
+%         modificator = 3;
+%         if strcmp(type,'Test')
+%             if mod(modificator + n - 1,3) == 0
+%                 n = modificator + n;
+%             else
+%                 n = modificator + n - 1;
+%             end
+%         elseif strcmp(type,'Learn')
+%             n = modificator + n - 3;
+%         end
+                
+        if (n>261)
+            break;%prevent the pop of an error in the case where the modificator 
+            %makes the loop iterate over a non existing index of image and
+            %essentially makes us lose our BD results
+        end
+        
+        
+        
+        
         nom = ['IM (' num2str(n) ')'];
         im = (imread(['./BD/'  nom '.JPG']));
-%        figure(fid);
-        imshow(im);
+        %imshow(im);
         title 'Image source'
 %        -- RECONNAISSANCE DES SYMBOLES DANS L'IMAGE n
         close all;
-        imProcessed = newAlgo(im,100);
-        imshow(imProcessed);
+        
+        %apply some saturation in whites and filtering to image
+        imProcessed = saturAndFilt(im,100);
+        %figure,imshow(im);
+        
+        %1st round
         [centers1,radii1] = searchCircles(imProcessed);
+        
         %2nd round
         [centers2,radii2] = searchCircles(im);
-        %merge cenetrs and radii
-        [centers, radii] = mergeCenters(centers1,radii1,centers2,radii2);
-        coords = centersToCoords(centers,radii);
-        %viscircles(centers, radii,'EdgeColor','r');
         
-        %line COLOR array in hsv
-        lineColorHsv = lineColorArray;
+        %merge centers and radii
+        [centers, radii] = mergeCenters(centers1,radii1,centers2,radii2);
+        
+        coords = centersToCoords(centers,radii);
+        
+        
+        %viscircles(centers, radii,'EdgeColor','g');
+        %viscircles(centers1, radii1,'EdgeColor','b');
+        %viscircles(centers2, radii2,'EdgeColor','r');
+    
         
         for i = (1:length(radii))
+            
+            %returns subImage with specified coords
             subIm = subImage(im,coords,i);
-            %subImAdjusted = adjust_luminosity(subIm);
+            
+            %adjust luminosity
             illuminant = illumgray(im);
-            subImIllu = chromadapt(subIm,illuminant,'ColorSpace','linear-rgb');
-            imshow(subImIllu);
-            C = exctractNumbers(subImIllu);
-            %subImIllu = colorFilter(subImIllu,lineColorHsv);
-            %montage({subIm,subImIllu});
-            correlation = corrLines(subImIllu);
-            pause(3);
+            subImIllu = chromadapt(subIm,illuminant,'ColorSpace','linear-rgb');          
+            %figure,imshow(subImIllu);
+            
+            %begin analysis chain
+            C = extractNumbers(subImIllu);
+            similarity = templateMatching(C);
+            RESULTS = simToNum(similarity);
+            %end of analysis
+
+            if (RESULTS{1}~=0)
+                %if RESULTS is not an empty cell
+                %write a new BD matrix line
+                BD(iterationBD,1) = n;%first col, image number
+                BD(iterationBD,(2:5)) = coords(i,:);%sub-box coordinates
+                BD(iterationBD,6) = RESULTS{1};%number of the line
+                iterationBD = iterationBD + 1;%next time we'll write one row further on BD
+            end
+            %pause(3);
         end
         
 
@@ -72,7 +129,11 @@ if ok
     end
     
     % Sauvegarde dans un fichier .mat des résulatts
-    fileOut  = 'myResuts.mat';
+    if strcmp(type,'Test')
+        fileOut  = 'myTestResults.mat';
+    elseif strcmp(type,'Learn')
+        fileOut  = 'myLearnResults.mat';
+    end
     save(fileOut,'BD');
     
 end

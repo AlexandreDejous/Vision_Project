@@ -1,6 +1,6 @@
 %im = newAlgo(imread('.\BD\IM (2).JPG'),100);
 
-function response = newAlgo(im,tresh)
+function response = saturAndFilt(im,tresh)
 
 
 [sizex, sizey, sizez] = size(im);

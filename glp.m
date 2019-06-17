@@ -1,9 +1,11 @@
 function response = glp(im,thresh)
+% by mohammed athiq, found on https://fr.mathworks.com/matlabcentral/fileexchange/40579-frequency-domain-filtering-for-grayscale-images?s_tid=prof_contriblnk
+% modified
 % inputs
 % im is the fourier transform of the image
 % thresh is the cutoff circle radius
 %outputs
-% res is the filtered image
+% response is the filtered image
 [r,c]=size(im);
 im = fftshift(fft2(im));
 res = zeros(r,c);

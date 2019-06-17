@@ -22,7 +22,7 @@ end
 
 %thresholds for merge
 threshC = 10;
-threshR = 10;
+threshR = 15;
 
 %merge radii
 r(1) = radii12(1);
