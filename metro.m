@@ -36,6 +36,9 @@ if ok
     iterationmax = 1;%change
     % END FOR TESTS
     
+    %Shuts down imfindcircles warnings
+    warning('off','images:imfindcircles:warnForLargeRadiusRange');
+    
     % Programme de reconnaissance des images
     for n = numImages
         %condition to make the loop iterate a certain number of times
@@ -63,16 +66,15 @@ if ok
             %makes the loop iterate over a non existing index of image and
             %essentially makes us lose our BD results
         end
-        
-        
-        
-        
+ 
         nom = ['IM (' num2str(n) ')'];
         im = (imread(['./BD/'  nom '.JPG']));
         %imshow(im);
         title 'Image source'
 %        -- RECONNAISSANCE DES SYMBOLES DANS L'IMAGE n
         close all;
+        
+        sprintf('---IMAGE %d ---',n)
         
         %apply some saturation in whites and filtering to image
         imProcessed = saturAndFilt(im,100);
@@ -99,6 +101,7 @@ if ok
             
             %returns subImage with specified coords
             subIm = subImage(im,coords,i);
+            sprintf('subImage %d - %d processing...',n,i)
             
             %adjust luminosity
             illuminant = illumgray(im);
@@ -121,9 +124,6 @@ if ok
             end
             %pause(3);
         end
-        
-
-        
         
 %        -- STOCAGE DANS LA MATRICE BD de 6 colonnes
     end
