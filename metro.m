@@ -32,8 +32,8 @@ if ok
     BD = zeros(1,6);
     iterationBD = 1;
     % FOR TESTS
-    iteration = 0;%don't change
-    iterationmax = 1;%change
+%     iteration = 0;%don't change
+%     iterationmax = 1;%change
     % END FOR TESTS
     
     %Shuts down imfindcircles warnings
@@ -43,10 +43,10 @@ if ok
     for n = numImages
         %condition to make the loop iterate a certain number of times
         %(serves BD indexing)
-        if (iteration >= iterationmax)
-            break
-        end
-        iteration = iteration+1;
+%         if (iteration >= iterationmax)
+%             break
+%         end
+%         iteration = iteration+1;
         
         %numImage modificator to start over at a defined image
         %comment if useless, put modificator = image you want to start
